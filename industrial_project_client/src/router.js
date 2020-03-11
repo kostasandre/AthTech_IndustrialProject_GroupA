@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import LoginPage from './components/LoginPage'
+import HomePage from './components/HomePage'
+import RegisterPage from './components/RegisterPage'
 
 Vue.use(Router)
 
