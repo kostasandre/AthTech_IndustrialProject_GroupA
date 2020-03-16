@@ -1,4 +1,92 @@
 package service;
 
+
+import model.Advertise;
+import model.Person;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import repository.AdvertiseRepository;
+import repository.PersonRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
 public class PersonService {
+    @Autowired
+    private PersonRepository personRepository;
+    @Autowired
+    private AdvertiseRepository advertiseRepository;
+
+
+    public Person create(Person person) {
+        List<Advertise> ads = person.getAdvertises();
+        if(ads != null && !ads.isEmpty()) {
+            ads.forEach(ad -> {
+                ad = this.advertiseRepository.save(ad);
+            });
+            person.setAdvertises(ads);
+        }
+        return personRepository.save(person);
+    }
+
+
+    public List<Person> getAll(){
+        return personRepository.findAll();
+    }
+
+    public List<Advertise> getAllAdvertise(){
+        List<Person> persons =  personRepository.findAll();
+        List<Advertise> ads = new ArrayList<>();
+        persons.forEach(p -> {
+            List<Advertise> pads = p.getAdvertises();
+            if(pads != null && !pads.isEmpty()) {
+                pads.forEach(a ->{
+                    ads.add(a);
+                });
+
+            }
+
+        });
+        return ads;
+    }
+
+
+    public List<Person> getByEmail(String email) {
+        return personRepository.findByEmail(email);
+    }
+
+
+    public Person update(Person person) {
+        List<Advertise> ads = person.getAdvertises();
+        if(ads != null && !ads.isEmpty()) {
+            ads.forEach(ad -> {
+                ad = this.advertiseRepository.save(ad);
+            });
+            person.setAdvertises(ads);
+        }
+        return personRepository.save(person);
+        //return null;
+    }
+
+
+    public void deleteAll() {
+        personRepository.deleteAll();
+    }
+
+
+    public void deleteByEmail(String email) {
+        List<Person> persons = personRepository.findByEmail(email);
+        if(persons != null && !persons.isEmpty()) {
+            personRepository.delete(persons.get(0));
+        }
+    }
+
+    public List<Person> findByEmailAndPassword(String email, String password){
+        return personRepository.findByEmailAndPassword(email, password);
+    }
+
+
+
 }
+
