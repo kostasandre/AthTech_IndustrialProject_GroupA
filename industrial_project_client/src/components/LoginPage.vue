@@ -13,9 +13,8 @@
                 <v-form>
                   <v-text-field
                     v-model="email"
-                    label="Login"
+                    label="Email"
                     name="login"
-                    prepend-icon="person"
                     type="text"
                   />
 
@@ -24,7 +23,6 @@
                     id="password"
                     label="Password"
                     name="password"
-                    prepend-icon="lock"
                     type="password"
                   />
                 </v-form>
@@ -41,14 +39,8 @@
     </v-content>
     <v-snackbar
       v-model="snackbar"
-      :bottom="y === 'bottom'"
       :color="'red'"
-      :left="x === 'right'"
-      :multi-line="mode === 'multi-line'"
-      :right="x === 'right'"
       :timeout='3000'
-      :top="y === 'top'"
-      :vertical="mode === 'vertical'"
     >
       Invalid email or password!
       <v-btn
@@ -72,7 +64,7 @@ export default {
   },
   data: function() {
     return {
-      snackbar: false,
+      snackbar: true,
       email: "",
       password: ""
     };
