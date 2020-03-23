@@ -128,8 +128,8 @@ public class Person {
     }
 
 
-    public void setApplications(List<Application> advertises) {
-        this.applications = advertises;
+    public void setApplications(List<Application> applications) {
+        this.applications = applications;
     }
 
 

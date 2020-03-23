@@ -11,15 +11,15 @@ import java.util.List;
 @Service
 public class ApplicationService {
     @Autowired
-    private ApplicationRepository _advertiseRepository;
+    private ApplicationRepository _applicationRepository;
 
     public List<Application> getAll(){
-        List<Application> allApps = _advertiseRepository.findAll();
+        List<Application> allApps = _applicationRepository.findAll();
         return allApps;
     }
 
     public String deleteAd(String id) {
-        _advertiseRepository.deleteById(id);
+        _applicationRepository.deleteById(id);
         return "Record was deleted!";
     }
 }
