@@ -1,12 +1,12 @@
 package controllers;
 
-import model.Advertise;
+import model.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import service.AdvertiseService;
+import service.ApplicationService;
 
 import java.util.List;
 
@@ -14,10 +14,10 @@ import java.util.List;
 @CrossOrigin()
 public class AdvertiseController {
     @Autowired
-    private AdvertiseService _advertiseService;
+    private ApplicationService _advertiseService;
 
     @RequestMapping("/getAllAds")
-    public List<Advertise> getAll() {
+    public List<Application> getAll() {
         return _advertiseService.getAll();
     }
 

@@ -1,20 +1,20 @@
 package service;
 
 
-import model.Advertise;
+import model.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.AdvertiseRepository;
+import repository.ApplicationRepository;
 
 import java.util.List;
 
 @Service
-public class AdvertiseService {
+public class ApplicationService {
     @Autowired
-    private AdvertiseRepository _advertiseRepository;
+    private ApplicationRepository _advertiseRepository;
 
-    public List<Advertise> getAll(){
-        List<Advertise> allAds = _advertiseRepository.findAll();
+    public List<Application> getAll(){
+        List<Application> allAds = _advertiseRepository.findAll();
         return allAds;
     }
 

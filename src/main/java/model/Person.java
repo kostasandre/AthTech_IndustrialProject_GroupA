@@ -19,27 +19,116 @@ public class Person {
     String password;
     String firstName;
     String lastName;
+    String companyName;
+    String activities;
+    String afm;
+    String address;
+    String city;
+    String tk;
+    String phone;
+    String username;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getActivities() {
+        return activities;
+    }
+
+    public void setActivities(String activities) {
+        this.activities = activities;
+    }
+
+    public String getAfm() {
+        return afm;
+    }
+
+    public void setAfm(String afm) {
+        this.afm = afm;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getTk() {
+        return tk;
+    }
+
+    public void setTk(String tk) {
+        this.tk = tk;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     int age;
     @DBRef
-    List<Advertise> advertises;
+    List<Application> advertises;
 
 
-    public Person(String email, String password, String firstName, String lastName, int age, List<Advertise> advertises) {
+    public Person(String email, String password, String firstName, String lastName,
+                  int age, String phone, String companyName, String activities,String afm,String address, String city, String tk, String username) {
+
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        this.companyName = companyName;
+        this.activities = activities;
+        this.afm = afm;
+        this.address = address;
+        this.city = city;
+        this.tk = tk;
+        this.phone = phone;
+        this.username = username;
         this.advertises = advertises;
     }
 
 
-    public List<Advertise> getAdvertises() {
+
+
+    public List<Application> getAdvertises() {
         return advertises;
     }
 
 
-    public void setAdvertises(List<Advertise> advertises) {
+    public void setAdvertises(List<Application> advertises) {
         this.advertises = advertises;
     }
 

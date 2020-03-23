@@ -1,11 +1,11 @@
 package service;
 
 
-import model.Advertise;
+import model.Application;
 import model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.AdvertiseRepository;
+import repository.ApplicationRepository;
 import repository.PersonRepository;
 
 import java.util.ArrayList;
@@ -16,11 +16,11 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
     @Autowired
-    private AdvertiseRepository advertiseRepository;
+    private ApplicationRepository advertiseRepository;
 
 
     public Person create(Person person) {
-        List<Advertise> ads = person.getAdvertises();
+        List<Application> ads = person.getAdvertises();
         if(ads != null && !ads.isEmpty()) {
             ads.forEach(ad -> {
                 ad = this.advertiseRepository.save(ad);
@@ -35,11 +35,11 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    public List<Advertise> getAllAdvertise(){
+    public List<Application> getAllAdvertise(){
         List<Person> persons =  personRepository.findAll();
-        List<Advertise> ads = new ArrayList<>();
+        List<Application> ads = new ArrayList<>();
         persons.forEach(p -> {
-            List<Advertise> pads = p.getAdvertises();
+            List<Application> pads = p.getAdvertises();
             if(pads != null && !pads.isEmpty()) {
                 pads.forEach(a ->{
                     ads.add(a);
@@ -58,7 +58,7 @@ public class PersonService {
 
 
     public Person update(Person person) {
-        List<Advertise> ads = person.getAdvertises();
+        List<Application> ads = person.getAdvertises();
         if(ads != null && !ads.isEmpty()) {
             ads.forEach(ad -> {
                 ad = this.advertiseRepository.save(ad);
@@ -85,8 +85,6 @@ public class PersonService {
     public List<Person> findByEmailAndPassword(String email, String password){
         return personRepository.findByEmailAndPassword(email, password);
     }
-
-
 
 }
 
