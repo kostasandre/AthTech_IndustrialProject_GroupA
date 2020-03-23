@@ -14,8 +14,8 @@ public class ApplicationService {
     private ApplicationRepository _advertiseRepository;
 
     public List<Application> getAll(){
-        List<Application> allAds = _advertiseRepository.findAll();
-        return allAds;
+        List<Application> allApps = _advertiseRepository.findAll();
+        return allApps;
     }
 
     public String deleteAd(String id) {
