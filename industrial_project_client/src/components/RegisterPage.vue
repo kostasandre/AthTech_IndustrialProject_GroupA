@@ -27,48 +27,101 @@
               </v-toolbar>
               <v-card-text>
                 <v-form ref="form" v-model="valid" :lazy-validation="false">
-                  <v-text-field
-                    v-model="firstName"
-                    label="First Name"
-                    name="firstName"
+                   <v-text-field
+                    v-model="companyName"
+                    label="Επωνυμία Εταιρίας:"
+                    name="companyName"
                     type="text"
                     :rules="nameRules"
                   />
                   <v-text-field
-                  v-model="lastName"
-                    label="Last Name"
-                    name="lastName"
+                  v-model="activities"
+                    label="Δραστηριότητα Εταιρίας:"
+                    name="activities"
+                    type="text"
+                  />
+                  <v-text-field
+                  v-model="afm"
+                    label="ΑΦΜ:"
+                    name="afm"
+                    type="text"
+                    :rules="requiredRules"
+                  />
+                  <v-text-field
+                  v-model="address"
+                    label="Διεύθυνση:"
+                    name="address"
+                    type="text"
+                  />
+                  <v-text-field
+                  v-model="city"
+                    id="city"
+                    label="Πόλη:"
+                    name="city"
+                    type="text"
+                  />
+                  <v-text-field
+                  v-model="tk"
+                    id="tk"
+                    label="Τ.Κ:"
+                    name="tk"
+                    type="text"
+                  />
+                  <v-text-field
+                  v-model="name"
+                    id="name"
+                    label="Όνομα Υπευθύνου:"
+                    name="name"
                     type="text"
                     :rules="nameRules"
+                  />
+                  <v-text-field
+                  v-model="surname"
+                    id="surname"
+                    label="Επίθετο Υπευθύνου:"
+                    name="surname"
+                    type="text"
+                    :rules="requiredRules"
+                  />
+                  <v-text-field
+                  v-model="phone"
+                    id="phone"
+                    label="Τηλέφωνο:"
+                    name="phone"
+                    type="text"
+                    :rules="requiredRules"
                   />
                   <v-text-field
                   v-model="email"
-                    label="Email"
+                    id="email"
+                    label="E-mail:"
                     name="email"
                     type="text"
-                    prepend-icon="email"
-                    required
                     :rules="emailRules"
                   />
-
+                  <v-text-field
+                  v-model="username"
+                    id="username"
+                    label="Username:"
+                    name="username"
+                    type="text"
+                    :rules="requiredRules"
+                  />
                   <v-text-field
                   v-model="password"
                     id="password"
-                    label="Password"
+                    label="Password:"
                     name="password"
-                    prepend-icon="lock"
                     type="password"
-                    required
-                    :rules="nameRules"
+                    :rules="requiredRules"
                   />
                   <v-text-field
-                  v-model="age"
-                    id="age"
-                    label="Age"
-                    name="age"
-                    type="number"
-                    value="20"
-                    required
+                  v-model="repassword"
+                    id="repassword"
+                    label="Repeat Password:"
+                    name="repassword"
+                    type="password"
+                    :rules="requiredRules"
                   />
                 </v-form>
               </v-card-text>
@@ -81,6 +134,20 @@
         </v-row>
       </v-container>
     </v-content>
+    <v-snackbar
+      v-model="snackbar"
+      :color="'red'"
+      :timeout='3000'
+    >
+      {{ snackbarText }}
+      <v-btn
+        dark
+        text
+        @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -94,11 +161,21 @@ export default {
   },
   data: function() {
     return {
-        firstName: '',
-        lastName: '',
-        email: '',
+        snackbar: false,
+        snackbarText: '',
+        companyName:'',
+        activities:'',
+        afm:'',
+        address:'',
+        city:'',
+        tk:'',
+        name:'',
+        surname:'',
+        phone:'',
+        email:'',
+        username:'',
         password:'',
-        age: 20,
+        repassword:'',
         valid: true,
         emailRules: [
         v => !!v || 'Required value!',
@@ -107,7 +184,10 @@ export default {
       nameRules: [
         v => !!v || 'Required value!',
         v => (v && v.length <= 10) || 'Name must be less than 10 characters',
-      ]
+      ],
+      requiredRules: [
+        v => !!v || 'Required value!',
+      ],
     };
   },
   methods:{
@@ -115,9 +195,9 @@ export default {
       if (!this.$refs.form.validate()) {
           return          
         }
-      if(this.firstName == '' || this.lastName == '' || this.email == '' || this.password == ''){
-        window.alert('Required fields are missing!');
-        return;
+      if(this.password !== this.repassword){
+        this.snackbarText = 'Invalid password. Password must be the same!';
+        this.snackbar = true;
       }
        axios.post('http://localhost:8080/create', 
        {
@@ -128,16 +208,14 @@ export default {
             age: this.age
         }
       ).then(result => {
-          /* eslint-disable no-console */
-      console.log(JSON.stringify(result.data));
       if(result.status === 200 && result.data.length > 0){
           window.alert("Successful registration please login");
         router.push({path: '/'})
         
       }
       }, error => {
-        /* eslint-disable no-console */
-        window.alert("Error during registration! Error: " + error.response.data)
+        this.snackbarText = 'Error during registration! Error: ' + error.message;
+        this.snackbar = true;
       });
     }
   }

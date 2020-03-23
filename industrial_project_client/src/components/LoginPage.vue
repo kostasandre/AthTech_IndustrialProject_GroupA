@@ -42,7 +42,7 @@
       :color="'red'"
       :timeout='3000'
     >
-      Invalid email or password!
+      {{ snackbarText }}
       <v-btn
         dark
         text
@@ -62,13 +62,12 @@ export default {
   props: {
     msg: String
   },
-  data: function() {
-    return {
-      snackbar: true,
+  data: () => ({
+      snackbar: false,
       email: "",
-      password: ""
-    };
-  },
+      password: "",
+      snackbarText:"",
+    }),
   mounted() {
     if (localStorage.name) {
       this.$router.push({ path: "/" });
@@ -93,6 +92,10 @@ export default {
           },
           error => {
             if(error.response && error.response.status === 404){
+              this.snackbar = true;
+            }
+            else{
+              this.snackbarText = "Internal server error!"
               this.snackbar = true;
             }
             /* eslint-disable no-console */
