@@ -10,13 +10,13 @@ import service.PersonService;
 
 import java.util.List;
 
-@CrossOrigin() //origins = "http://localhost:4078"
+@CrossOrigin() //origins = "http://localhost:4078" <-- Front End URL
 public class PersonController {
     @Autowired
     private PersonService personService;
 
     @RequestMapping("/create")
-    public ResponseEntity<String> create(@RequestBody Person person){ // create(@RequestParam String email,@RequestParam String password,@RequestParam String firstName, @RequestParam String lastName, @RequestParam int age, @RequestParam List<Advertise> advertises) {
+    public ResponseEntity<String> create(@RequestBody Person person){
         List<Person> exists = personService.getByEmail(person.getEmail());
         if(exists != null && !exists.isEmpty()) {
             return new ResponseEntity<String>("Person with email: " + person.getEmail() + " already exists!", HttpStatus.CONFLICT);
@@ -41,7 +41,7 @@ public class PersonController {
     public Person update(@RequestBody Person person) {
         List<Person> ps = personService.getByEmail(person.getEmail());
         Person p = ps.get(0);
-        p.setAdvertises(person.getAdvertises());
+        p.setApplications(person.getApplications());
         p = personService.update(p);
         return p;
     }

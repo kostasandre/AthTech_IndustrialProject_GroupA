@@ -98,7 +98,7 @@ public class Person {
 
     int age;
     @DBRef
-    List<Application> advertises;
+    List<Application> applications;
 
 
     public Person(String email, String password, String firstName, String lastName,
@@ -117,19 +117,19 @@ public class Person {
         this.tk = tk;
         this.phone = phone;
         this.username = username;
-        this.advertises = advertises;
+        this.applications = applications;
     }
 
 
 
 
-    public List<Application> getAdvertises() {
-        return advertises;
+    public List<Application> getApplications() {
+        return applications;
     }
 
 
-    public void setAdvertises(List<Application> advertises) {
-        this.advertises = advertises;
+    public void setApplications(List<Application> applications) {
+        this.applications = applications;
     }
 
 

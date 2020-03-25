@@ -16,16 +16,16 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
     @Autowired
-    private ApplicationRepository advertiseRepository;
+    private ApplicationRepository applicationRepository;
 
 
     public Person create(Person person) {
-        List<Application> ads = person.getAdvertises();
+        List<Application> ads = person.getApplications();
         if(ads != null && !ads.isEmpty()) {
             ads.forEach(ad -> {
-                ad = this.advertiseRepository.save(ad);
+                ad = this.applicationRepository.save(ad);
             });
-            person.setAdvertises(ads);
+            person.setApplications(ads);
         }
         return personRepository.save(person);
     }
@@ -39,7 +39,7 @@ public class PersonService {
         List<Person> persons =  personRepository.findAll();
         List<Application> ads = new ArrayList<>();
         persons.forEach(p -> {
-            List<Application> pads = p.getAdvertises();
+            List<Application> pads = p.getApplications();
             if(pads != null && !pads.isEmpty()) {
                 pads.forEach(a ->{
                     ads.add(a);
@@ -58,12 +58,12 @@ public class PersonService {
 
 
     public Person update(Person person) {
-        List<Application> ads = person.getAdvertises();
+        List<Application> ads = person.getApplications();
         if(ads != null && !ads.isEmpty()) {
             ads.forEach(ad -> {
-                ad = this.advertiseRepository.save(ad);
+                ad = this.applicationRepository.save(ad);
             });
-            person.setAdvertises(ads);
+            person.setApplications(ads);
         }
         return personRepository.save(person);
         //return null;

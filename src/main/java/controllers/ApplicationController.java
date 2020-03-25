@@ -12,17 +12,18 @@ import java.util.List;
 
 @RestController
 @CrossOrigin()
-public class AdvertiseController {
+public class ApplicationController {
+
     @Autowired
-    private ApplicationService _advertiseService;
+    private ApplicationService _applicationService;
 
     @RequestMapping("/getAllAds")
     public List<Application> getAll() {
-        return _advertiseService.getAll();
+        return _applicationService.getAll();
     }
 
     @RequestMapping("/deleteAd")
     public String deleteAd(@RequestParam String id) {
-        return _advertiseService.deleteAd(id);
+        return _applicationService.deleteAd(id);
     }
 }
