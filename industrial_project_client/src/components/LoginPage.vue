@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app style="background-color: #e0e0e0" id="inspire">
     <v-content>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
@@ -10,12 +10,13 @@
                 <v-spacer />
               </v-toolbar>
               <v-card-text>
-                <v-form>
+                <v-form ref="form" v-model="valid" :lazy-validation="false">
                   <v-text-field
                     v-model="email"
                     label="Email"
                     name="login"
                     type="text"
+                    :rules="requiredRules"
                   />
 
                   <v-text-field
@@ -24,6 +25,7 @@
                     label="Password"
                     name="password"
                     type="password"
+                    :rules="requiredRules"
                   />
                 </v-form>
               </v-card-text>
@@ -67,6 +69,10 @@ export default {
       email: "",
       password: "",
       snackbarText:"",
+      valid: true,
+      requiredRules: [
+        v => !!v || 'Required value!',
+      ],
     }),
   mounted() {
     if (localStorage.name) {
@@ -75,6 +81,9 @@ export default {
   },
   methods: {
     login: function() {
+      if (!this.$refs.form.validate()) {
+          return          
+        }
       axios
         .get("http://localhost:8080/login", {
           params: {

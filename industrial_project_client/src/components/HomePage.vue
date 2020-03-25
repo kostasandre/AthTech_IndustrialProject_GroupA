@@ -1,11 +1,9 @@
 <template>
   <v-container>
     <v-tabs>
-      <v-tab @change="onTabChange">Ads</v-tab>
-      <v-tab>My Ads</v-tab>
-      <v-tab-item>
-        <!-- <v-container fluid> -->
-        <!-- <v-row> -->
+      <!-- <v-tab @change="onTabChange">Ads</v-tab> -->
+      <v-tab>My Requests</v-tab>
+      <!-- <v-tab-item>
         <v-card>
           <v-card-title>
             <v-spacer></v-spacer>
@@ -24,16 +22,9 @@
             :search="search"
             class="elevation-1"
           >
-            <!-- <template v-slot:item.action="{ item }">
-                  <v-icon small class="mr-2" @click="editItem(item)">edit</v-icon>
-                  <v-icon small @click="deleteItem(item)">delete</v-icon>
-            </template>-->
           </v-data-table>
         </v-card>
-
-        <!-- </v-row> -->
-        <!-- </v-container> -->
-      </v-tab-item>
+      </v-tab-item> -->
       <v-tab-item>
         <v-card>
           <v-card-title>
@@ -99,14 +90,8 @@
     <v-btn v-on:click="logout" color="primary">Log out</v-btn>
     <v-snackbar
       v-model="snackbar"
-      :bottom="y === 'bottom'"
       :color="snackbarColor"
-      :left="x === 'right'"
-      :multi-line="mode === 'multi-line'"
-      :right="x === 'right'"
-      :timeout="3000"
-      :top="y === 'top'"
-      :vertical="mode === 'vertical'"
+      :timeout='3000'
     >
       {{snackbarMessage}}
       <v-btn dark text @click="snackbar = false">Close</v-btn>
@@ -168,31 +153,18 @@ export default {
               } else {
                 this.myAds = [];
               }
-
-              // if (
-              //   !localStorage.name ||
-              //   localStorage.name != result.data[0].email
-              // ) {
-              //   localStorage.name = result.data[0].email;
-              // }
-              //window.alert("Logged in successfully!");
               this.getAllAds();
             }
           },
           error => {
-            /* eslint-disable no-console */
-            console.log(error.message);
+            this.snackbarColor = 'red';
+            this.snackbarMessage = 'Error retreiving user reqeuests. Errr: ' + error.message;
+            this.snackbar = true;
           }
         );
     } else {
-      this.$router.push("/login");
+      //this.$router.push("/login");
     }
-
-    // axios.get("http://localhost:8080/getAll").then(response => {
-    //   if (response.status === 200) {
-    //     this.users = response.data;
-    //   }
-    // });
   },
   methods: {
     logout() {
