@@ -1,7 +1,7 @@
 <template>
   <v-app style="background-color: #e0e0e0" id="inspire">
     <v-content>
-      <v-container class="fill-height" fluid>
+      <v-container>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4">
             <v-card class="elevation-12">

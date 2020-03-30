@@ -2,8 +2,6 @@
 <v-app style="background-color: #e0e0e0" id="inspire">
     <v-content>
       <v-container
-        class="fill-height"
-        fluid
       >
         <v-row
           align="center"
@@ -35,12 +33,6 @@
                     :rules="nameRules"
                   />
                   <v-text-field
-                  v-model="activities"
-                    label="Δραστηριότητα Εταιρίας:"
-                    name="activities"
-                    type="text"
-                  />
-                  <v-text-field
                   v-model="afm"
                     label="ΑΦΜ:"
                     name="afm"
@@ -52,37 +44,7 @@
                     label="Διεύθυνση:"
                     name="address"
                     type="text"
-                  />
-                  <v-text-field
-                  v-model="city"
-                    id="city"
-                    label="Πόλη:"
-                    name="city"
-                    type="text"
-                  />
-                  <v-text-field
-                  v-model="tk"
-                    id="tk"
-                    label="Τ.Κ:"
-                    name="tk"
-                    type="text"
-                  />
-                  <v-text-field
-                  v-model="name"
-                    id="name"
-                    label="Όνομα Υπευθύνου:"
-                    name="name"
-                    type="text"
-                    :rules="nameRules"
-                  />
-                  <v-text-field
-                  v-model="surname"
-                    id="surname"
-                    label="Επίθετο Υπευθύνου:"
-                    name="surname"
-                    type="text"
-                    :rules="requiredRules"
-                  />
+                  />                  
                   <v-text-field
                   v-model="phone"
                     id="phone"
@@ -98,14 +60,6 @@
                     name="email"
                     type="text"
                     :rules="emailRules"
-                  />
-                  <v-text-field
-                  v-model="username"
-                    id="username"
-                    label="Username:"
-                    name="username"
-                    type="text"
-                    :rules="requiredRules"
                   />
                   <v-text-field
                   v-model="password"
@@ -165,16 +119,10 @@ export default {
         snackbar: false,
         snackbarText: '',
         companyName:'',
-        activities:'',
         afm:'',
         address:'',
-        city:'',
-        tk:'',
-        name:'',
-        surname:'',
         phone:'',
         email:'',
-        username:'',
         password:'',
         repassword:'',
         valid: true,
@@ -202,11 +150,18 @@ export default {
       }
        axios.post('http://localhost:8080/create', 
        {
-            firstName: this.firstName,
-            lastName: this.lastName, 
-            email: this.email,
-            password: this.password,
-            age: this.age
+            companyName:this.companyName,
+        activities:this.activities,
+        afm:this.afm,
+        address:this.address,
+        city:this.city,
+        tk:this.tk,
+        name:this.name,
+        surname:this.surname,
+        phone:this.phone,
+        email:this.email,
+        username:this.username,
+        password:this.password
         }
       ).then(result => {
       if(result.status === 200 && result.data.length > 0){
