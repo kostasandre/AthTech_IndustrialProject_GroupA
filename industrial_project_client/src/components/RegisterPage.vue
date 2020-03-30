@@ -148,19 +148,13 @@ export default {
         this.snackbarText = 'Invalid password. Password must be the same!';
         this.snackbar = true;
       }
-       axios.post('http://localhost:8080/create', 
+       axios.post('http://localhost:8080/company/register', 
        {
             companyName:this.companyName,
-        activities:this.activities,
         afm:this.afm,
         address:this.address,
-        city:this.city,
-        tk:this.tk,
-        name:this.name,
-        surname:this.surname,
         phone:this.phone,
         email:this.email,
-        username:this.username,
         password:this.password
         }
       ).then(result => {

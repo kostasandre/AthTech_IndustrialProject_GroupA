@@ -85,7 +85,7 @@ export default {
           return          
         }
       axios
-        .get("http://localhost:8080/login", {
+        .get("http://localhost:8080/company/login", {
           params: {
             email: this.email,
             password: this.password
