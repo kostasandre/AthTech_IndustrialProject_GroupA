@@ -1,11 +1,11 @@
 package service;
 
 
-import model.Advertise;
+import model.Application;
 import model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.AdvertiseRepository;
+import repository.ApplicationRepository;
 import repository.PersonRepository;
 
 import java.util.ArrayList;
@@ -16,16 +16,16 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
     @Autowired
-    private AdvertiseRepository advertiseRepository;
+    private ApplicationRepository applicationRepository;
 
 
     public Person create(Person person) {
-        List<Advertise> ads = person.getAdvertises();
+        List<Application> ads = person.getApplications();
         if(ads != null && !ads.isEmpty()) {
             ads.forEach(ad -> {
-                ad = this.advertiseRepository.save(ad);
+                ad = this.applicationRepository.save(ad);
             });
-            person.setAdvertises(ads);
+            person.setApplications(ads);
         }
         return personRepository.save(person);
     }
@@ -35,11 +35,11 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    public List<Advertise> getAllAdvertise(){
+    public List<Application> getAllAdvertise(){
         List<Person> persons =  personRepository.findAll();
-        List<Advertise> ads = new ArrayList<>();
+        List<Application> ads = new ArrayList<>();
         persons.forEach(p -> {
-            List<Advertise> pads = p.getAdvertises();
+            List<Application> pads = p.getApplications();
             if(pads != null && !pads.isEmpty()) {
                 pads.forEach(a ->{
                     ads.add(a);
@@ -58,12 +58,12 @@ public class PersonService {
 
 
     public Person update(Person person) {
-        List<Advertise> ads = person.getAdvertises();
+        List<Application> ads = person.getApplications();
         if(ads != null && !ads.isEmpty()) {
             ads.forEach(ad -> {
-                ad = this.advertiseRepository.save(ad);
+                ad = this.applicationRepository.save(ad);
             });
-            person.setAdvertises(ads);
+            person.setApplications(ads);
         }
         return personRepository.save(person);
         //return null;
@@ -85,8 +85,6 @@ public class PersonService {
     public List<Person> findByEmailAndPassword(String email, String password){
         return personRepository.findByEmailAndPassword(email, password);
     }
-
-
 
 }
 

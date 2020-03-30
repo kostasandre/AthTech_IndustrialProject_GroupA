@@ -1,7 +1,7 @@
 <template>
-  <v-app id="inspire">
+  <v-app style="background-color: #e0e0e0" id="inspire">
     <v-content>
-      <v-container class="fill-height" fluid>
+      <v-container>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4">
             <v-card class="elevation-12">
@@ -10,13 +10,13 @@
                 <v-spacer />
               </v-toolbar>
               <v-card-text>
-                <v-form>
+                <v-form ref="form" v-model="valid" :lazy-validation="false">
                   <v-text-field
                     v-model="email"
-                    label="Login"
+                    label="Email"
                     name="login"
-                    prepend-icon="person"
                     type="text"
+                    :rules="requiredRules"
                   />
 
                   <v-text-field
@@ -24,8 +24,8 @@
                     id="password"
                     label="Password"
                     name="password"
-                    prepend-icon="lock"
                     type="password"
+                    :rules="requiredRules"
                   />
                 </v-form>
               </v-card-text>
@@ -41,16 +41,10 @@
     </v-content>
     <v-snackbar
       v-model="snackbar"
-      :bottom="y === 'bottom'"
       :color="'red'"
-      :left="x === 'right'"
-      :multi-line="mode === 'multi-line'"
-      :right="x === 'right'"
       :timeout='3000'
-      :top="y === 'top'"
-      :vertical="mode === 'vertical'"
     >
-      Invalid email or password!
+      {{ snackbarText }}
       <v-btn
         dark
         text
@@ -70,13 +64,16 @@ export default {
   props: {
     msg: String
   },
-  data: function() {
-    return {
+  data: () => ({
       snackbar: false,
       email: "",
-      password: ""
-    };
-  },
+      password: "",
+      snackbarText:"",
+      valid: true,
+      requiredRules: [
+        v => !!v || 'Required value!',
+      ],
+    }),
   mounted() {
     if (localStorage.name) {
       this.$router.push({ path: "/" });
@@ -84,6 +81,9 @@ export default {
   },
   methods: {
     login: function() {
+      if (!this.$refs.form.validate()) {
+          return          
+        }
       axios
         .get("http://localhost:8080/login", {
           params: {
@@ -101,6 +101,10 @@ export default {
           },
           error => {
             if(error.response && error.response.status === 404){
+              this.snackbar = true;
+            }
+            else{
+              this.snackbarText = "Internal server error!"
               this.snackbar = true;
             }
             /* eslint-disable no-console */
