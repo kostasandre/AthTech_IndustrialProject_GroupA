@@ -2,6 +2,7 @@ package com.letsstart.springbootrestapiproject.controller;
 
 import java.util.List;
 
+
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -23,32 +24,39 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.letsstart.springbootrestapiproject.dao.CompanyDAO;
-
+import com.letsstart.springbootrestapiproject.dao.RequestDAO;
 import com.letsstart.springbootrestapiproject.model.Company;
+import com.letsstart.springbootrestapiproject.model.Request;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4078")
 @RestController
 @RequestMapping("/company")
 public class CompanyController {
 	
 	@Autowired
 	CompanyDAO companyDAO;
+	RequestDAO requestDAO;
 	
-	/* to save an companies*/
-	@PostMapping("/companies")
-	public Company createEmployee(@Valid @RequestBody Company comp) {
+	/* to save a company*/
+	@PostMapping("/register")
+	public Company createCompany(@Valid @RequestBody Company comp) {
 		return companyDAO.save(comp);
+	}
+	
+	@PostMapping("/request")
+	public Request createRequest(@Valid @RequestBody Request req) {
+		return requestDAO.save(req);
 	}
 	
 	/*get all companies*/
 	@GetMapping("/companies")
-	public List<Company> getAllEmployees(){
+	public List<Company> getAllCompanies(){
 		return companyDAO.findAll();
 	}
 	
-	/*get company by compid*/
+	/*get company by id*/
 //	@GetMapping("/companies/{id}")
-//	public ResponseEntity<Company> getEmployeeById(@PathVariable(value="id") Long compid){
+//	public ResponseEntity<Company> getCompanyById(@PathVariable(value="id") Long compid){
 //		
 //		Optional<Company> optEmp=companyDAO.findOne(compid);
 //		Company comp;
@@ -65,18 +73,18 @@ public class CompanyController {
 //		
 //	}
 	
-	// Employee login
-	@RequestMapping("/employees/login")
+	// Company login
+	@RequestMapping("/login")
 	public Object findByEmailAndPassword(@RequestBody Body body) {
-		List<Company> employees = companyDAO.login(body.getUsername(), body.getPassword());
-		if(employees.isEmpty()) {
+		List<Company> companies = companyDAO.loginByEmail(body.getEmail(), body.getPassword());
+		if(companies.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
-		return employees.get(0);
+		return companies.get(0);
 	}
 	
 	
-	/*update an employee by compid*/
+	/*update an company by compid*/
 //	@PutMapping("/companies/{id}")
 //	public ResponseEntity<Company> updateCompany(@PathVariable(value="id") Long compid,@Valid @RequestBody Company compDetails){
 //		
@@ -97,8 +105,8 @@ public class CompanyController {
 //		comp.setLastname(compDetails.getLastname());
 //		comp.setAmount(compDetails.getAmount());
 //		
-//		Company updateEmployee=companyDAO.save(comp);
-//		return ResponseEntity.ok().body(updateEmployee);
+//		Company updateCompany=companyDAO.save(comp);
+//		return ResponseEntity.ok().body(updateCompany);
 //	}
 	
 	/*Delete a company*/
@@ -123,7 +131,7 @@ public class CompanyController {
 		
 		/*Transfer money to company*/
 //		@PostMapping("/companies/transfer")
-//		public ResponseEntity<Object> updateEmployee(@RequestBody TransferDto transferDto){
+//		public ResponseEntity<Object> updateCompany(@RequestBody TransferDto transferDto){
 //			
 //			Optional<Company> optComp=companyDAO.findOne(Long.parseLong(transferDto.getUserId()));
 //			List<Company> optComp1=companyDAO.findOneByUsername(transferDto.getTransferTo());
@@ -162,13 +170,13 @@ public class CompanyController {
 //}
 
 class Body{
-	String username;
+	String email;
 	String password;
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getPassword() {
 		return password;
