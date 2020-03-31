@@ -152,12 +152,12 @@ export default {
         { text: "Request code", value: "requestCode", sortable: true },
         { text: "Request expire date", value: "requestExpireDate", sortable: true }
       ],
-      myAds: [],
+      myRequests: [],
       allAds: []
     };
   },
   mounted() {
-    if (localStorage.name) {
+    if (localStorage.name && this.$route.params) {
       axios
         .get("http://localhost:8080/get", {
           params: {
@@ -192,7 +192,7 @@ export default {
           }
         );
     } else {
-      //this.$router.push("/login");
+      this.$router.push("/login");
     }
   },
   methods: {
@@ -205,7 +205,7 @@ export default {
     },
     editItem(item) {
       if (item) {
-        this.editedIndex = this.myAds.indexOf(item);
+        this.editedIndex = this.myRequests.indexOf(item);
         this.editedItem = Object.assign({}, item);
         this.formTitle = this.editedIndex === -1 ? "New request" : this.editedItem.description;
       }
@@ -255,18 +255,18 @@ export default {
       if (this.editedIndex > -1) {
         Object.assign(this.myAds[this.editedIndex], this.editedItem);
       } else {
-        this.myAds.push(this.editedItem);
+        this.myRequests.push(this.editedItem);
       }
 
-      this.user.advertises = this.myAds;
-      axios.post("http://localhost:8080/update", this.user).then(
+      //this.user.advertises = this.myRequests;
+      axios.post("http://localhost:8080/company/register", this.editedItem).then(
         result => {
           if (result.status === 200) {
             this.snackbarColor = "green";
-            this.snackbarMessage = "Ad was created!";
+            this.snackbarMessage = "Request was created!";
             this.snackbar = true;
             this.user = result.data;
-            this.myAds = this.user.advertises;
+            this.myRequests.push(this.editedItem);
           } else {
             this.snackbarColor = "red";
             this.snackbarMessage = "Ad was not created!";
@@ -274,7 +274,7 @@ export default {
           }
         },
         error => {
-          this.myAds.splice(this.editedIndex, 1);
+          this.myRequests.splice(this.editedIndex, 1);
           this.snackbarColor = "red";
           this.snackbarMessage = "Error: " + error.message;
           this.snackbar = true;

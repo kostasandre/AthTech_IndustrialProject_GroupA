@@ -95,12 +95,13 @@ export default {
           result => {
             if (result.status === 200 && result.data ) {              
               localStorage.name = result.data.email;              
-              this.$router.push({ path: "/" });
+              this.$router.push({ path: "/", params:result.data });
               //window.alert("Logged in successfully!");
             }
           },
           error => {
             if(error.response && error.response.status === 404){
+              this.snackbarText = "Invalid email or password!"
               this.snackbar = true;
             }
             else{
