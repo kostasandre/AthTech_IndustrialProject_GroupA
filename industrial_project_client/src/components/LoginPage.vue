@@ -95,7 +95,12 @@ export default {
           result => {
             if (result.status === 200 && result.data ) {              
               localStorage.name = result.data.email;              
-              this.$router.push({ path: "/", params:result.data });
+              this.$router.push(
+                { name: 'login', 
+                params:{
+                  company: result.data
+                }
+                });
               //window.alert("Logged in successfully!");
             }
           },

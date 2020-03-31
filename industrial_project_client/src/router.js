@@ -12,7 +12,8 @@ export default new Router({
         {
             path: '/login',
             name: 'login',
-            component: LoginPage
+            component: LoginPage,
+            props:true
         },
         {
             path: '/',
