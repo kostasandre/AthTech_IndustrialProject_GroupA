@@ -96,7 +96,7 @@ export default {
             if (result.status === 200 && result.data ) {              
               localStorage.name = result.data.email;              
               this.$router.push(
-                { name: 'login', 
+                { path: '/', 
                 params:{
                   company: result.data
                 }
