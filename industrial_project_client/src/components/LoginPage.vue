@@ -85,11 +85,11 @@ export default {
           return          
         }
       axios
-        .get("http://localhost:8080/company/login", {
-          params: {
+        .post("http://localhost:8080/company/login",
+        { 
             email: this.email,
             password: this.password
-          }
+          
         })
         .then(
           result => {
