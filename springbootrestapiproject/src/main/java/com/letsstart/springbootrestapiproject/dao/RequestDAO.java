@@ -17,10 +17,9 @@ public class RequestDAO {
 	
 	/*to save a request*/
 	
-	public Request save(Request comp) {
-		return requestRepository.save(comp);
+	public Request save(Request req) {
+		return requestRepository.save(req);
 	}
-	
 	
 	/* search all requests*/
 	
@@ -28,29 +27,15 @@ public class RequestDAO {
 		return requestRepository.findAll();
 	}
 	
-//	public List<Request> login(String username, String password){
-//		return requestRepository.findByUsernameAndPassword(username, password);
-//	}
-	
-	public List<Request> loginByEmail(String email, String password) {
-		return requestRepository.findByEmailAndPassword(email, password);
-	}
-	
 	/*get a request by id*/
 	public Optional<Request> findOne(Long empId) {
 		return requestRepository.findById(empId);
 	}
 	
-//	public List<Company> findOneByUsername(String username) {
-//		return requestRepository.findByUsername(username);
-//	}
-	
-	
 	/*delete a request*/
 	
-	public void delete(Request comp) {
-		requestRepository.delete(comp);
-	}
-	
+	public void delete(Request req) {
+		requestRepository.delete(req);
+	}	
 
 }
