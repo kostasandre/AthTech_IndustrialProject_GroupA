@@ -14,7 +14,7 @@ public class CompanyDAO {
 	@Autowired
 	CompanyRepository companyRepository;
 	
-	/*to save an company*/
+	/*to save a company*/
 	
 	public Company save(Company comp) {
 		return companyRepository.save(comp);
@@ -27,25 +27,25 @@ public class CompanyDAO {
 		return companyRepository.findAll();
 	}
 	
-	public List<Company> login(String username, String password){
-		return companyRepository.findByUsernameAndPassword(username, password);
-	}
+//	public List<Company> login(String username, String password){
+//		return companyRepository.findByUsernameAndPassword(username, password);
+//	}
 	
 	public List<Company> loginByEmail(String email, String password) {
 		return companyRepository.findByEmailAndPassword(email, password);
 	}
 	
-	/*get an employee by id*/
+	/*get a company by id*/
 	public Optional<Company> findOne(Long empId) {
 		return companyRepository.findById(empId);
 	}
 	
-	public List<Company> findOneByUsername(String username) {
-		return companyRepository.findByUsername(username);
-	}
+//	public List<Company> findOneByUsername(String username) {
+//		return companyRepository.findByUsername(username);
+//	}
 	
 	
-	/*delete an employee*/
+	/*delete a company*/
 	
 	public void delete(Company comp) {
 		companyRepository.delete(comp);
