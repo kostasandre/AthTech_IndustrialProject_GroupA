@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,6 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.letsstart.springbootrestapiproject.dao.CompanyDAO;
 import com.letsstart.springbootrestapiproject.dao.RequestDAO;
 import com.letsstart.springbootrestapiproject.model.Company;
+import com.letsstart.springbootrestapiproject.model.Login;
 import com.letsstart.springbootrestapiproject.model.Request;
 
 @CrossOrigin(origins = "http://localhost:4078")
@@ -74,9 +76,19 @@ public class CompanyController {
 //	}
 	
 	// Company login
-	@RequestMapping("/login")
-	public Object findByEmailAndPassword(@RequestBody Body body) {
-		List<Company> companies = companyDAO.loginByEmail(body.getEmail(), body.getPassword());
+	
+//	@RequestMapping(value = "/login", method = RequestMethod.POST)
+//	public Object findByEmailAndPassword(@RequestBody Body body) {
+//		List<Company> companies = companyDAO.loginByEmail(body.getEmail(), body.getPassword());
+//		if(companies.isEmpty()) {
+//			return ResponseEntity.notFound().build();
+//		}
+//		return companies.get(0);
+//	}
+	
+	@PostMapping("/login")
+	public Object createLogin(@Valid @RequestBody Login log) {
+		List<Company> companies = companyDAO.loginByEmail(log.getEmail(), log.getPassword());
 		if(companies.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
@@ -109,21 +121,21 @@ public class CompanyController {
 //		return ResponseEntity.ok().body(updateCompany);
 //	}
 	
-	/*Delete a company*/
-//	@DeleteMapping("/companies/{id}")
-//	public ResponseEntity<Company> deleteCompany(@PathVariable(value="id") Long compid){
+	/*Delete a request*/
+//	@DeleteMapping("/requests/{id}")
+//	public ResponseEntity<Request> deleteRequest(@PathVariable(value="id") Long reqid){
 //		
-//		Optional<Company> optEmp=companyDAO.findOne(compid.longValue());
+//		Optional<Request> optEmp=requestDAO.findOne(reqid.longValue());
 //		Company comp;
 //		try {
-//			comp = optComp.get();
+//			reqid = optEmp.get();
 //		} catch (NoSuchElementException e) {
-//			comp = null;
+//			reqid = null;
 //		}
-//		if(comp==null) {
+//		if(reqid==null) {
 //			return ResponseEntity.notFound().build();
 //		}
-//		companyDAO.delete(comp);
+//			requestDAO.delete(reqid);
 //		
 //		return ResponseEntity.ok().build();
 //	}
@@ -169,22 +181,7 @@ public class CompanyController {
 //		
 //}
 
-class Body{
-	String email;
-	String password;
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-  }
+
 }
 //class TransferDto{
 //	String userId;

@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,17 +27,21 @@ public class Company {
 	private Long id;
 	private String username;
 	private String password;
-	//private String firstname;
-	//private String lastname;
 	private String email;
 	private String companyName;
-	//private String activities;
 	private String afm;
 	private String address;
-	//private String city;
-	//private String tk;
 	private String phone;
+	@OneToMany(targetEntity=Request.class, mappedBy="company", fetch=FetchType.EAGER)
 	private List<Request> getRequests;
+
+	public List<Request> getGetRequests() {
+		return getRequests;
+	}
+
+	public void setGetRequests(List<Request> getRequests) {
+		this.getRequests = getRequests;
+	}
 
 	public String getEmail() {
 		return email;
@@ -53,14 +59,6 @@ public class Company {
 		this.companyName = companyName;
 	}
 
-//	public String getActivities() {
-//		return activities;
-//	}
-
-//	public void setActivities(String activities) {
-//		this.activities = activities;
-//	}
-
 	public String getAfm() {
 		return afm;
 	}
@@ -77,22 +75,6 @@ public class Company {
 		this.address = address;
 	}
 
-//	public String getCity() {
-//		return city;
-//	}
-//
-//	public void setCity(String city) {
-//		this.city = city;
-//	}
-//
-//	public String getTk() {
-//		return tk;
-//	}
-//
-//	public void setTk(String tk) {
-//		this.tk = tk;
-//	}
-
 	public String getPhone() {
 		return phone;
 	}
@@ -100,7 +82,6 @@ public class Company {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
@@ -129,22 +110,6 @@ public class Company {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-//	public String getFirstname() {
-//		return firstname;
-//	}
-//
-//	public void setFirstname(String firstname) {
-//		this.firstname = firstname;
-//	}
-//
-//	public String getLastname() {
-//		return lastname;
-//	}
-//
-//	public void setLastname(String lastname) {
-//		this.lastname = lastname;
-//	}
 
 	public Date getCreatedAt() {
 		return createdAt;
