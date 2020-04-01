@@ -94,13 +94,8 @@ export default {
         .then(
           result => {
             if (result.status === 200 && result.data ) {              
-              localStorage.name = result.data.email;              
-              this.$router.push(
-                { path: '/', 
-                params:{
-                  company: result.data
-                }
-                });
+              localStorage.company = result.data;              
+              this.$router.push('/');
               //window.alert("Logged in successfully!");
             }
           },

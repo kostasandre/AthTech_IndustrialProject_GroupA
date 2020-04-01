@@ -157,40 +157,45 @@ export default {
     };
   },
   mounted() {
-    if (localStorage.name && this.$route.params) {
-      axios
-        .get("http://localhost:8080/get", {
-          params: {
-            email: localStorage.name
-          }
-        })
-        .then(
-          result => {
-            if (result.status === 200 && result.data.length === 0) {
-              if (localStorage.name) {
-                localStorage.removeItem("name");
-              }
-              this.$router.push("/login");
-            } else if (result.status === 200 && result.data.length > 0) {
-              this.user = result.data[0];
-              if (
-                result.data[0].advertises &&
-                result.data[0].advertises.length > 0
-              ) {
-                this.myAds = result.data[0].advertises;
-              } else {
-                this.myAds = [];
-              }
-              this.getAllAds();
-            }
-          },
-          error => {
-            this.snackbarColor = "red";
-            this.snackbarMessage =
-              "Error retreiving user reqeuests. Errr: " + error.message;
-            this.snackbar = true;
-          }
-        );
+    if (localStorage.data) {
+      if(localStorage.data.getRequests){
+      this.myRequests = data.getRequests;
+      }else{
+        this.myRequests = [];
+      }
+    //   axios
+    //     .get("http://localhost:8080/get", {
+    //       params: {
+    //         email: localStorage.name
+    //       }
+    //     })
+    //     .then(
+    //       result => {
+    //         if (result.status === 200 && result.data) {
+    //           if (localStorage.name) {
+    //             localStorage.removeItem("name");
+    //           }
+    //           this.$router.push("/login");
+    //         } else if (result.status === 200 && result.data.length > 0) {
+    //           this.user = result.data[0];
+    //           if (
+    //             result.data[0].advertises &&
+    //             result.data[0].advertises.length > 0
+    //           ) {
+    //             this.myAds = result.data[0].advertises;
+    //           } else {
+    //             this.myAds = [];
+    //           }
+    //           this.getAllAds();
+    //         }
+    //       },
+    //       error => {
+    //         this.snackbarColor = "red";
+    //         this.snackbarMessage =
+    //           "Error retreiving user reqeuests. Errr: " + error.message;
+    //         this.snackbar = true;
+    //       }
+    //     );
     } else {
       this.$router.push("/login");
     }
@@ -253,13 +258,12 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.myAds[this.editedIndex], this.editedItem);
+        Object.assign(this.myRequests[this.editedIndex], this.editedItem);
       } else {
         this.myRequests.push(this.editedItem);
       }
 
-      //this.user.advertises = this.myRequests;
-      axios.post("http://localhost:8080/company/register", this.editedItem).then(
+      axios.post("http://localhost:8080/company/request", this.editedItem).then(
         result => {
           if (result.status === 200) {
             this.snackbarColor = "green";
