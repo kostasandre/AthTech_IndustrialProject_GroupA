@@ -159,7 +159,7 @@ export default {
   mounted() {
     if (localStorage.data) {
       if(localStorage.data.getRequests){
-      this.myRequests = data.getRequests;
+      this.myRequests = localStorage.data.getRequests;
       }else{
         this.myRequests = [];
       }
