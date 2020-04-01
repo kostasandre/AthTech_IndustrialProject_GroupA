@@ -40,7 +40,7 @@
             </v-card-title>
             <v-data-table
               :headers="headers"
-              :items="myAds"
+              :items="myRequests"
               :items-per-page="5"
               :search="search"
               class="elevation-1"
@@ -163,6 +163,11 @@ export default {
       this.editedItem.companyId = this.company.id;
       this.editedItem.company  = this.company.companyName;
       this.myRequests = this.company.getRequests;
+      this.myRequests.forEach(element => {
+        element.company = this.company.companyName;
+        element.address = this.company.address;
+        element.requestCode = element.id;
+      });
     //   axios
     //     .get("http://localhost:8080/get", {
     //       params: {
