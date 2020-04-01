@@ -56,6 +56,8 @@ public class CompanyController {
 		return companyDAO.findAll();
 	}
 	
+	
+	
 	/*get company by id*/
 //	@GetMapping("/companies/{id}")
 //	public ResponseEntity<Company> getCompanyById(@PathVariable(value="id") Long compid){
@@ -140,69 +142,5 @@ public class CompanyController {
 //		return ResponseEntity.ok().build();
 //	}
 		
-		
-		/*Transfer money to company*/
-//		@PostMapping("/companies/transfer")
-//		public ResponseEntity<Object> updateCompany(@RequestBody TransferDto transferDto){
-//			
-//			Optional<Company> optComp=companyDAO.findOne(Long.parseLong(transferDto.getUserId()));
-//			List<Company> optComp1=companyDAO.findOneByUsername(transferDto.getTransferTo());
-//			Company empFrom;
-//			Company empTo;
-//			try {
-//				empFrom = optEmp.get();
-//				if(optEmp1.isEmpty()) {
-//					return ResponseEntity.notFound().build();
-//				}
-//				empTo = optEmp1.get(0);
-//				Long amtFrom = empFrom.getAmount();
-//				Long amtTo = empTo.getAmount();
-//				Long transferDtoAmt = Long.parseLong(transferDto.getAmount());
-//				if(amtFrom >= transferDtoAmt) {
-//					amtFrom = amtFrom - transferDtoAmt;
-//					empFrom.setAmount(amtFrom);
-//					employeeDAO.save(empFrom);
-//					amtTo = amtTo + transferDtoAmt;
-//					empTo.setAmount(amtTo);
-//					employeeDAO.save(empTo);
-//				}else {
-//					return ResponseEntity.unprocessableEntity().build();
-//				}
-//				
-//					
-//				
-//			} catch (NoSuchElementException e) {
-//				return ResponseEntity.notFound().build();
-//				
-//			}
-//			
-//			return ResponseEntity.ok().build();
-//	}
-//		
-//}
-
 
 }
-//class TransferDto{
-//	String userId;
-//	String transferTo;
-//	String amount;
-//	public String getUserId() {
-//		return userId;
-//	}
-//	public void setUserId(String userId) {
-//		this.userId = userId;
-//	}
-//	public String getTransferTo() {
-//		return transferTo;
-//	}
-//	public void setTransferTo(String transferTo) {
-//		this.transferTo = transferTo;
-//	}
-//	public String getAmount() {
-//		return amount;
-//	}
-//	public void setAmount(String amount) {
-//		this.amount = amount;
-//	}
-//}
