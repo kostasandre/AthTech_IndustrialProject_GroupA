@@ -18,6 +18,8 @@ import javax.persistence.TemporalType;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="requests")
 @EntityListeners(AuditingEntityListener.class)
@@ -28,6 +30,8 @@ public class Request {
 	private Long id;
 	private String supervisor;
 	private String description;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "company_id")
 	private Company company;
@@ -71,4 +75,5 @@ public class Request {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
 }

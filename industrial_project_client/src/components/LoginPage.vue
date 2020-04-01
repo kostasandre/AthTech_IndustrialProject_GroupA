@@ -93,9 +93,8 @@ export default {
         })
         .then(
           result => {
-            if (result.status === 200 && result.data ) {              
-              localStorage.company = result.data;              
-              this.$router.push('/');
+            if (result.status === 200 && result.data ) {             
+              this.$router.push({path: '/', name: 'home', params: {company: result.data}});
               //window.alert("Logged in successfully!");
             }
           },

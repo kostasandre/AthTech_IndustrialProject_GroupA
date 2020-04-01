@@ -1,5 +1,6 @@
 package com.letsstart.springbootrestapiproject.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,8 +47,15 @@ public class CompanyController {
 	}
 	
 	@PostMapping("/request")
-	public Request createRequest(@Valid @RequestBody Request req) {
-		return requestDAO.save(req);
+	public Company createRequest(@Valid @RequestBody Request req) {
+		List<Request> request = new ArrayList<Request>();
+		
+		Company comp = companyDAO.findOne(req.getCompany().getId()).get();
+		//request = comp.getGetRequests();
+		Request req1 = new Request();
+		req1.setSupervisor(req.getSupervisor());
+		request.add(req1);
+		return companyDAO.save(comp);
 	}
 	
 	/*get all companies*/

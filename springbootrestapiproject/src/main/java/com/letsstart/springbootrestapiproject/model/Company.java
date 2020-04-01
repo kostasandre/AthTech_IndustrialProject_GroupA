@@ -16,6 +16,8 @@ import javax.persistence.TemporalType;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="companies")
 @EntityListeners(AuditingEntityListener.class)
@@ -32,6 +34,8 @@ public class Company {
 	private String afm;
 	private String address;
 	private String phone;
+	
+	@JsonManagedReference
 	@OneToMany(targetEntity=Request.class, mappedBy="company", fetch=FetchType.EAGER)
 	private List<Request> getRequests;
 

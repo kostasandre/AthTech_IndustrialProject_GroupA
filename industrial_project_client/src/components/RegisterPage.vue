@@ -158,9 +158,8 @@ export default {
         password:this.password
         }
       ).then(result => {
-      if(result.status === 200 && result.data.length > 0){
-          window.alert("Successful registration please login");
-        router.push({path: '/'})
+      if(result.status === 200  && result.data){
+        this.$router.push({path: '/', name: 'home', params: {company: result.data}});
         
       }
       }, error => {

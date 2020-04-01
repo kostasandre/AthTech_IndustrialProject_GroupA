@@ -73,9 +73,9 @@
                             <v-col cols="12" sm="6" md="6">
                               <v-text-field v-model="editedItem.supervisor" label="Supervisor"></v-text-field>
                             </v-col>
-                            <v-col cols="12" sm="6" md="6">
+                            <!-- <v-col cols="12" sm="6" md="6">
                               <v-text-field v-model="editedItem.requestDate" label="Request date"></v-text-field>
-                            </v-col>
+                            </v-col> -->
                           </v-row>
                           <v-row>
                             <v-col cols="12" sm="12" md="12">
@@ -123,6 +123,7 @@ export default {
   name: "HomePage",
   data: function() {
     return {
+      company:{},
       user: {},
       snackbarMessage: "",
       snackbarColor: "",
@@ -157,12 +158,11 @@ export default {
     };
   },
   mounted() {
-    if (localStorage.data) {
-      if(localStorage.data.getRequests){
-      this.myRequests = localStorage.data.getRequests;
-      }else{
-        this.myRequests = [];
-      }
+    if (this.$route.params && this.$route.params.company) {
+      this.company = this.$route.params.company;
+      this.editedItem.companyId = this.company.id;
+      this.editedItem.company  = this.company.companyName;
+      this.myRequests = this.company.getRequests;
     //   axios
     //     .get("http://localhost:8080/get", {
     //       params: {
@@ -196,7 +196,8 @@ export default {
     //         this.snackbar = true;
     //       }
     //     );
-    } else {
+    }
+     else {
       this.$router.push("/login");
     }
   },
@@ -262,7 +263,9 @@ export default {
       } else {
         this.myRequests.push(this.editedItem);
       }
-
+      delete this.company.getRequests;
+      delete this.company.createdAt;
+      this.editedItem.company = this.company;
       axios.post("http://localhost:8080/company/request", this.editedItem).then(
         result => {
           if (result.status === 200) {
