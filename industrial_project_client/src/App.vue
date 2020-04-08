@@ -24,7 +24,7 @@
         </v-col>
         
         
-     </v-row>
+     </v-row>     
       </v-container>
     </v-content>
     <v-content style="background-color: #e0e0e0">

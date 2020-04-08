@@ -1,6 +1,11 @@
 <template>
   <v-content>
     <v-container>
+      <v-row
+     align="center"
+          justify="start">
+          <h1>Company: {{this.company.companyName}}</h1>
+     </v-row>
       <v-tabs>
         <!-- <v-tab @change="onTabChange">Ads</v-tab> -->
         <v-tab>My Requests</v-tab>
@@ -167,6 +172,8 @@ export default {
         element.company = this.company.companyName;
         element.address = this.company.address;
         element.requestCode = element.id;
+        element.requestDate = element.requestDate ? new Date(element.requestDate).toLocaleDateString("en-GB") : '';
+        element.requestExpireDate = element.requestExpireDate ? new Date(element.requestExpireDate).toLocaleDateString("en-GB") : '';
       });
     //   axios
     //     .get("http://localhost:8080/get", {
