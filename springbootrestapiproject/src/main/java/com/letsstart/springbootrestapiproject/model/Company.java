@@ -34,6 +34,7 @@ public class Company {
 	private String afm;
 	private String address;
 	private String phone;
+	private boolean isAdmin;
 	
 	@JsonManagedReference
 	@OneToMany(targetEntity=Request.class, mappedBy="company", fetch=FetchType.EAGER)
@@ -122,5 +123,14 @@ public class Company {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+	
 
 }

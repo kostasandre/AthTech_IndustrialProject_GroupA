@@ -2,8 +2,6 @@ package com.letsstart.springbootrestapiproject.model;
 
 import java.util.Date;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -11,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,6 +16,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import enums.Status;
 
 @Entity
 @Table(name="requests")
@@ -30,6 +29,7 @@ public class Request {
 	private Long id;
 	private String supervisor;
 	private String description;
+	private Status status;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -74,6 +74,12 @@ public class Request {
 	
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 	
 }
