@@ -80,12 +80,12 @@
                         <v-container>
                           <v-row>
                             <v-col cols="12" sm="12" md="12">
-                              <v-text-field v-model="editedItem.companyName" label="Company"></v-text-field>
+                              <v-text-field disabled v-model="editedItem.companyName" label="Company"></v-text-field>
                             </v-col>                            
                           </v-row>
                           <v-row>
                             <v-col cols="12" sm="6" md="6">
-                              <v-text-field v-model="editedItem.supervisor" label="Supervisor"></v-text-field>
+                              <v-text-field disabled v-model="editedItem.supervisor" label="Supervisor"></v-text-field>
                             </v-col>
                             <!-- <v-col cols="12" sm="6" md="6">
                               <v-text-field v-model="editedItem.requestDate" label="Request date"></v-text-field>
@@ -93,7 +93,7 @@
                           </v-row>
                           <v-row>
                             <v-col cols="12" sm="12" md="12">
-                              <v-textarea
+                              <v-textarea disabled
                               v-model="editedItem.description"
                               name="Description"
                               label="Description"
@@ -104,6 +104,7 @@
                           <v-row>
                             <v-col cols="12" sm="12" md="12">
                               <v-select
+                              v-model="editedItem.status"
                                 :items="statuses"
                                 label="Status"
                               ></v-select>
@@ -164,7 +165,8 @@ export default {
         company: "",
         description: "",
         requestDate:"",
-        supervisor:""
+        supervisor:"",
+        status:""
       },
       defaultItem: {
         title: "",
@@ -323,7 +325,6 @@ this.myRequests.push(request);
       delete this.editedItem.companyName;
       delete this.editedItem.address;
       delete this.editedItem.requestExpireDate;
-      this.editedItem.status = 1;
       axios.post("http://localhost:8080/company/update-request", this.editedItem).then(
         result => {
           if (result.status === 200) {

@@ -71,7 +71,7 @@
                         <v-container>
                           <v-row>
                             <v-col cols="12" sm="12" md="12">
-                              <v-text-field v-model="editedItem.company" label="Company"></v-text-field>
+                              <v-text-field disabled v-model="company.companyName" label="Company"></v-text-field>
                             </v-col>                            
                           </v-row>
                           <v-row>
