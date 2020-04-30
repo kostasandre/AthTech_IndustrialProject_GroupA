@@ -3,12 +3,14 @@ package com.letsstart.springbootrestapiproject.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -36,8 +38,11 @@ public class Company {
 	private String phone;
 	private boolean isAdmin;
 	
-	@JsonManagedReference
-	@OneToMany(targetEntity=Request.class, mappedBy="company", fetch=FetchType.EAGER)
+	//@JsonManagedReference
+	//@OneToMany(targetEntity=Request.class, mappedBy="company", fetch=FetchType.EAGER)
+	//@JoinColumn(name = "company_id", referencedColumnName = "company_id")
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "company_id", referencedColumnName = "id")
 	private List<Request> getRequests;
 
 	public List<Request> getGetRequests() {

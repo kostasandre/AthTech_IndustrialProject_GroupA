@@ -93,8 +93,13 @@ export default {
         })
         .then(
           result => {
-            if (result.status === 200 && result.data ) {             
-              this.$router.push({path: '/', name: 'home', params: {company: result.data}});
+            if (result.status === 200 && result.data ) {   
+              if(result.data.admin){
+this.$router.push({path: '/', name: 'admin', params: {company: result.data}});
+              } else{
+                this.$router.push({path: '/', name: 'home', params: {company: result.data}});
+              }        
+              
               //window.alert("Logged in successfully!");
             }
           },

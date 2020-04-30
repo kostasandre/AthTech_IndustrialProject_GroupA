@@ -269,15 +269,15 @@ export default {
       }, 300);
     },
 
-    save() {
-      if (this.editedIndex > -1) {
+    save() {   
+         if (this.editedIndex > -1) {
         Object.assign(this.myRequests[this.editedIndex], this.editedItem);
       } else {
         this.myRequests.push(this.editedItem);
-      }
+      }   
       delete this.company.getRequests;
       delete this.company.createdAt;
-      this.editedItem.company = this.company;
+      this.editedItem.company_id = this.company.id;
       axios.post("http://localhost:8080/company/request", this.editedItem).then(
         result => {
           if (result.status === 200) {
@@ -285,7 +285,7 @@ export default {
             this.snackbarMessage = "Request was created!";
             this.snackbar = true;
             this.user = result.data;
-            this.myRequests.push(this.editedItem);
+         
           } else {
             this.snackbarColor = "red";
             this.snackbarMessage = "Ad was not created!";
@@ -293,7 +293,6 @@ export default {
           }
         },
         error => {
-          this.myRequests.splice(this.editedIndex, 1);
           this.snackbarColor = "red";
           this.snackbarMessage = "Error: " + error.message;
           this.snackbar = true;

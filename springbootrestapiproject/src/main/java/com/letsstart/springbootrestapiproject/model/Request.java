@@ -2,6 +2,7 @@ package com.letsstart.springbootrestapiproject.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -31,16 +32,26 @@ public class Request {
 	private String description;
 	private Status status;
 	
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "company_id")
-	private Company company;
+//	@JsonBackReference
+//	@ManyToOne
+//	@JoinColumn(name = "company_id")
+//	private Company company;
 	
-	public Company getCompany() {
-		return company;
+//	public Company getCompany() {
+//		return company;
+//	}
+//	public void setCompany(Company company) {
+//		this.company = company;
+//	}
+	
+	@Column(name = "company_id")
+    private Long company_id;
+	
+	public Long getCompany_id() {
+		return company_id;
 	}
-	public void setCompany(Company company) {
-		this.company = company;
+	public void setCompany_id(Long company_id) {
+		this.company_id = company_id;
 	}
 	public Long getId() {
 		return id;
