@@ -80,7 +80,7 @@
                         <v-container>
                           <v-row>
                             <v-col cols="12" sm="12" md="12">
-                              <v-text-field v-model="editedItem.company" label="Company"></v-text-field>
+                              <v-text-field v-model="editedItem.companyName" label="Company"></v-text-field>
                             </v-col>                            
                           </v-row>
                           <v-row>
@@ -98,6 +98,15 @@
                               name="Description"
                               label="Description"
                             ></v-textarea>
+                            </v-col>
+                            
+                          </v-row>
+                          <v-row>
+                            <v-col cols="12" sm="12" md="12">
+                              <v-select
+                                :items="statuses"
+                                label="Status"
+                              ></v-select>
                             </v-col>
                             
                           </v-row>
@@ -138,6 +147,10 @@ export default {
   data: function() {
     return {
       status: "",
+      statuses: ['Created',
+	'InProgress',
+	'Approved',
+	'Rejected'],
       company:{},
       user: {},
       snackbarMessage: "",
@@ -159,7 +172,7 @@ export default {
       },
       search: "",
       headers: [
-        // { text: "Id", value: "id" },
+        //{ text: "CompanyId", value: "companyId",visible: false },
         { text: "Company", value: "companyName" },
         { text: "Address", value: "address", sortable: true },
         { text: "Request date", value: "requestDate", sortable: true },
@@ -175,6 +188,7 @@ export default {
     };
   },
   mounted() {
+    if (this.$route.params && this.$route.params.company && this.$route.params.company.admin) {
       axios.get("http://localhost:8080/company/companies").then(
         result => {
           if (result.status === 200) {
@@ -243,6 +257,9 @@ this.myRequests.push(request);
     //         this.snackbar = true;
     //       }
     //     );
+  } else {
+     this.$router.push("/login");
+  }
   },
   methods: {
     logout() {
@@ -302,35 +319,36 @@ this.myRequests.push(request);
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.myRequests[this.editedIndex], this.editedItem);
-      } else {
-        this.myRequests.push(this.editedItem);
-      }
-      delete this.company.getRequests;
-      delete this.company.createdAt;
-      this.editedItem.company = this.company;
-      axios.post("http://localhost:8080/company/request", this.editedItem).then(
+      delete this.editedItem.requestDate;
+      delete this.editedItem.companyName;
+      delete this.editedItem.address;
+      delete this.editedItem.requestExpireDate;
+      this.editedItem.status = 1;
+      axios.post("http://localhost:8080/company/update-request", this.editedItem).then(
         result => {
           if (result.status === 200) {
             this.snackbarColor = "green";
-            this.snackbarMessage = "Request was created!";
+            this.snackbarMessage = "Request was updated!";
             this.snackbar = true;
-            this.user = result.data;
-            this.myRequests.push(this.editedItem);
+            Object.assign(this.myRequests[this.editedIndex], this.editedItem);
+            this.close();
           } else {
             this.snackbarColor = "red";
             this.snackbarMessage = "Ad was not created!";
             this.snackbar = true;
+            this.close();
           }
         },
         error => {
-          this.myRequests.splice(this.editedIndex, 1);
           this.snackbarColor = "red";
-          this.snackbarMessage = "Error: " + error.message;
+          this.snackbarMessage = "Error during update: " + error.message;
           this.snackbar = true;
+          this.close();
         }
+        
       );
-      this.close();
+    }
+      
     },
     getAllAds() {
       axios.get("http://localhost:8080/getAllAds").then(
