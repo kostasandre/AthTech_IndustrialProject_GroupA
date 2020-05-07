@@ -36,6 +36,18 @@ public class CompanyController {
 		return companyDAO.save(comp);
 	}
 	
+	/* to save a company*/
+	@PostMapping("/update-company")
+	public Company updateompany(@Valid @RequestBody Company comp) {
+		Optional<Company> compaOpt = companyDAO.findOne(comp.getId());
+		Company compa = compaOpt.get();
+		compa.setCompanyName(comp.getCompanyName());
+		compa.setAddress(comp.getAddress());
+		compa.setAfm(comp.getAfm());
+		compa.setPhone(comp.getPhone());
+		return companyDAO.save(compa);
+	}
+	
 	@PostMapping("/request")
 	public Request createRequest(@Valid @RequestBody Request req) {
 		Request req1 = new Request();
