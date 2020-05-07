@@ -193,12 +193,18 @@ export default {
       this.editedItem.companyId = this.company.id;
       this.editedItem.company = this.company.companyName;
       this.myRequests = this.company.getRequests;
+      this.myRequests.sort(function(a,b) {
+          a = new Date(a.requestDate);
+      b = new Date(b.requestDate);
+      return a>b ? -1 : a<b ? 1 : 0;
+      });
       this.myRequests.forEach(element => {
+        var date = new Date(element.requestDate);
         element.company = this.company.companyName;
         element.address = this.company.address;
         element.requestCode = element.id;
         element.requestDate = element.requestDate
-          ? new Date(element.requestDate).toLocaleDateString("en-GB")
+          ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
           : "";
         element.requestExpireDate = element.requestExpireDate
           ? new Date(element.requestExpireDate).toLocaleDateString("en-GB")
