@@ -59,13 +59,13 @@
             >
                 edit
             </v-icon>
-            <v-icon
+            <!-- <v-icon
                 small
                 color="red"
                 @click="deleteItem(item.id)"
             >
                 delete
-            </v-icon>
+            </v-icon> -->
         </template>
               <template v-slot:top>
                 <v-toolbar flat color="white">
@@ -148,8 +148,7 @@ export default {
   data: function() {
     return {
       status: "",
-      statuses: ['Created',
-	'InProgress',
+      statuses: [
 	'Approved',
 	'Rejected'],
       company:{},
@@ -329,13 +328,13 @@ this.myRequests.push(request);
         result => {
           if (result.status === 200) {
             this.snackbarColor = "green";
-            this.snackbarMessage = "Request was updated!";
+            this.snackbarMessage = "Application was updated!";
             this.snackbar = true;
             Object.assign(this.myRequests[this.editedIndex], this.editedItem);
             this.close();
           } else {
             this.snackbarColor = "red";
-            this.snackbarMessage = "Ad was not created!";
+            this.snackbarMessage = "Application didn't updated!";
             this.snackbar = true;
             this.close();
           }

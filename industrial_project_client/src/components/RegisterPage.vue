@@ -82,7 +82,6 @@
               <v-card-actions>
                 <v-spacer />               
                 <v-btn @click="register" color="primary">Submit</v-btn>
-                <v-btn v-on:click="login" color="primary">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>

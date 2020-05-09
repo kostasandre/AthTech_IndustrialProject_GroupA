@@ -172,7 +172,7 @@ export default {
         { text: "Supervisor", value: "supervisor", sortable: true },
         { text: "Request code", value: "requestCode", sortable: true },
         {
-          text: "Request expire date",
+          text: "Application Expire Date",
           value: "requestExpireDate",
           sortable: true
         },
