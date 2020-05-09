@@ -31,6 +31,7 @@ public class Request {
 	private String supervisor;
 	private String description;
 	private Status status;
+	private Date requestExpirationDate;
 	
 //	@JsonBackReference
 //	@ManyToOne
@@ -91,6 +92,12 @@ public class Request {
 	}
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+	public Date getRequestExpirationDate() {
+		return requestExpirationDate;
+	}
+	public void setRequestExpirationDate(Date requestExpirationDate) {
+		this.requestExpirationDate = requestExpirationDate;
 	}
 	
 }

@@ -180,7 +180,7 @@ export default {
         { text: "Description", value: "description" },
         { text: "Supervisor", value: "supervisor", sortable: true },
         { text: "Request code", value: "requestCode", sortable: true },
-        { text: "Request expire date", value: "requestExpireDate", sortable: true },
+        { text: "Request expire date", value: "requestExpirationDate", sortable: true },
         { text: "Status", value: "status", sortable: true },
         {text: 'Action', value: 'action'},
       ],
@@ -198,8 +198,9 @@ export default {
                       company.getRequests.forEach(request => {
                           request.companyName = company.companyName;
                           request.address = company.address;
+                          request.requestCode = request.id;
                           request.requestDate = request.requestDate ? new Date(request.requestDate).toLocaleDateString("en-GB") : '';
-        request.requestExpireDate = request.requestExpireDate ? new Date(request.requestExpireDate).toLocaleDateString("en-GB") : '';
+        request.requestExpirationDate = request.requestExpirationDate ? new Date(request.RequestExpirationDate).toLocaleDateString("en-GB") : '';
 this.myRequests.push(request);
                       });
                   
@@ -297,13 +298,13 @@ this.myRequests.push(request);
                 if (result.status === 200) {
                   this.myAds.splice(index, 1);
                   this.snackbarColor = "green";
-                  this.snackbarMessage = "Ad was deleted!";
+                  this.snackbarMessage = "Request was deleted!";
                   this.snackbar = true;
                 }
               },
               error => {
                 this.snackbarColor = "red";
-                this.snackbarMessage = "Error deleting Ad: " + error.message;
+                this.snackbarMessage = "Error deleting Request: " + error.message;
                 this.snackbar = true;
               }
             );
@@ -323,7 +324,7 @@ this.myRequests.push(request);
       delete this.editedItem.requestDate;
       delete this.editedItem.companyName;
       delete this.editedItem.address;
-      delete this.editedItem.requestExpireDate;
+      delete this.editedItem.RequestExpirationDate;
       axios.post("http://localhost:8080/company/update-request", this.editedItem).then(
         result => {
           if (result.status === 200) {

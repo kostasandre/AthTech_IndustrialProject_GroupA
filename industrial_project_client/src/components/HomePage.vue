@@ -173,7 +173,7 @@ export default {
         { text: "Request code", value: "requestCode", sortable: true },
         {
           text: "Request Expiration Date",
-          value: "requestExpireDate",
+          value: "requestExpirationDate",
           sortable: true
         },
         { text: "Status", value: "status", sortable: true }
@@ -206,7 +206,7 @@ export default {
         element.requestDate = element.requestDate
           ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
           : "";
-        element.requestExpireDate = element.requestExpireDate
+        element.requestExpirationDate = element.requestExpirationDate
           ? new Date(element.requestExpireDate).toLocaleDateString("en-GB")
           : "";
       });
@@ -283,13 +283,13 @@ export default {
                 if (result.status === 200) {
                   this.myAds.splice(index, 1);
                   this.snackbarColor = "green";
-                  this.snackbarMessage = "Ad was deleted!";
+                  this.snackbarMessage = "Request was deleted!";
                   this.snackbar = true;
                 }
               },
               error => {
                 this.snackbarColor = "red";
-                this.snackbarMessage = "Error deleting Ad: " + error.message;
+                this.snackbarMessage = "Error deleting Request: " + error.message;
                 this.snackbar = true;
               }
             );
