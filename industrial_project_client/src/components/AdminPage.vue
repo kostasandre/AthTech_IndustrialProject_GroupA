@@ -164,6 +164,7 @@ export default {
         company: "",
         description: "",
         requestDate:"",
+        requestExpirationDate:"",
         supervisor:"",
         status:""
       },
@@ -200,7 +201,7 @@ export default {
                           request.address = company.address;
                           request.requestCode = request.id;
                           request.requestDate = request.requestDate ? new Date(request.requestDate).toLocaleDateString("en-GB") : '';
-        request.requestExpirationDate = request.requestExpirationDate ? new Date(request.RequestExpirationDate).toLocaleDateString("en-GB") : '';
+        request.requestExpirationDate = request.requestExpirationDate ? new Date(request.requestExpirationDate).toLocaleDateString("en-GB") : '';
 this.myRequests.push(request);
                       });
                   
@@ -324,7 +325,7 @@ this.myRequests.push(request);
       delete this.editedItem.requestDate;
       delete this.editedItem.companyName;
       delete this.editedItem.address;
-      delete this.editedItem.RequestExpirationDate;
+      delete this.editedItem.requestExpirationDate;
       axios.post("http://localhost:8080/company/update-request", this.editedItem).then(
         result => {
           if (result.status === 200) {

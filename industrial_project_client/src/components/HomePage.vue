@@ -199,16 +199,21 @@ export default {
       return a>b ? -1 : a<b ? 1 : 0;
       });
       this.myRequests.forEach(element => {
-        var date = new Date(element.requestDate);
+        /* var date = new Date(element.requestDate); */
+       /*  var expirationDate = new Date(element.requestExpirationDate); */
         element.company = this.company.companyName;
         element.address = this.company.address;
         element.requestCode = element.id;
         element.requestDate = element.requestDate
-          ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-          : "";
+        ? new Date(element.requestDate).toLocaleDateString("en-GB")
+          : "";  
+          /* ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+          : "" ;*/
         element.requestExpirationDate = element.requestExpirationDate
-          ? new Date(element.requestExpireDate).toLocaleDateString("en-GB")
-          : "";
+         /* ? `${expirationDate.getDate()}/${expirationDate.getMonth() + 1}/${expirationDate.getFullYear()} ${expirationDate.getHours()}:${expirationDate.getMinutes()}:${expirationDate.getSeconds()}`
+          : "";  */
+           ? new Date(element.requestExpirationDate).toLocaleDateString("en-GB")
+          : "";  
       });
       //   axios
       //     .get("http://localhost:8080/get", {
@@ -322,7 +327,7 @@ export default {
             this.user = result.data;
           } else {
             this.snackbarColor = "red";
-            this.snackbarMessage = "Ad was not created!";
+            this.snackbarMessage = "Request was not created!";
             this.snackbar = true;
           }
         },
