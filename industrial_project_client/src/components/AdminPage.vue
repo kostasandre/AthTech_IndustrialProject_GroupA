@@ -8,7 +8,7 @@
      </v-row>
       <v-tabs>
         <!-- <v-tab @change="onTabChange">Ads</v-tab> -->
-        <v-tab>All Requests</v-tab>
+        <v-tab>All Requestss</v-tab>
         <!-- <v-tab-item>
         <v-card>
           <v-card-title>

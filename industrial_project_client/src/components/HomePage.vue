@@ -6,7 +6,7 @@
       </v-row>
       <v-tabs>
         <v-tab>My Requests</v-tab>
-        <v-tab>Company</v-tab>
+        <v-tab>Companyy</v-tab>
 
         <v-tab-item>
           <v-card>

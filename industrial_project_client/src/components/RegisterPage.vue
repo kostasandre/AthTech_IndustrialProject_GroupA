@@ -18,7 +18,7 @@
                 dark
                 flat
               >
-                <v-toolbar-title>Register form</v-toolbar-title>
+                <v-toolbar-title>Registeer form</v-toolbar-title>
                 <v-spacer />
                 
                 
