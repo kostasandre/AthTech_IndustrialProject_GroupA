@@ -2,11 +2,11 @@
   <v-content>
     <v-container>
       <v-row align="center" justify="start">
-        <h1>Company: {{this.company.companyName}}</h1>
+        <!-- <h1>Company: {{this.company.companyName}}</h1> -->
       </v-row>
       <v-tabs>
         <v-tab>My Requests</v-tab>
-        <v-tab>Companyy</v-tab>
+        <v-tab>Company</v-tab>
 
         <v-tab-item>
           <v-card>
@@ -35,7 +35,7 @@
                       dark
                       class="mb-2"
                       @click="editItem(defaultItem)"
-                    >New request</v-btn>
+                    >New Request</v-btn>
                   </template>
 
                   <v-dialog v-model="dialog" max-width="500px">
@@ -172,7 +172,7 @@ export default {
         { text: "Supervisor", value: "supervisor", sortable: true },
         { text: "Request code", value: "requestCode", sortable: true },
         {
-          text: "Application Expire Date",
+          text: "Request Expiration Date",
           value: "requestExpireDate",
           sortable: true
         },

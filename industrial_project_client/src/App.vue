@@ -11,14 +11,16 @@
         >
         <v-col
         :cols="2">
-          <h1>ESYD Portal</h1>
+          <router-link to="/login"><h1>ESYD Portal</h1></router-link>
         </v-col>
         <v-col 
         :cols="8">
           <div> 
+            <router-link to="/login">
 <v-img  src="./assets/logo.png" contain    
     height="100px"
     width="150px"></v-img>
+    </router-link>
           </div>
           
         </v-col>
