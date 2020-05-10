@@ -158,8 +158,10 @@ export default {
         }
       ).then(result => {
       if(result.status === 200  && result.data){
-        this.$router.push({path: '/', name: 'home', params: {company: result.data}});
-        
+       /*   this.snackbarText = 'Successful registration!';
+        this.snackbar = true; */
+        this.$router.push({path: '/login'});
+        // , name: 'home', params: {company: result.data}
       }
       }, error => {
         this.snackbarText = 'Error during registration! Error: ' + error.message;
