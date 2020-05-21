@@ -281,6 +281,7 @@ this.myRequests.push(request);
       this.$router.push("/login");
     },
     refresh(){
+      this.myRequests = [];
       axios.get("http://localhost:8080/company/companies").then(
         result => {
           if (result.status === 200) {
