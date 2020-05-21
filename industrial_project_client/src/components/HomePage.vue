@@ -36,6 +36,13 @@
                       class="mb-2"
                       @click="editItem(defaultItem)"
                     >New Request</v-btn>
+                    <v-btn
+                    style="margin-left: 30px;"
+                      color="primary"
+                      dark
+                      class="mb-2"
+                      @click="refresh()"
+                    >Refresh</v-btn>
                   </template>
 
                   <v-dialog v-model="dialog" max-width="500px">
@@ -259,6 +266,9 @@ export default {
       }
 
       this.$router.push("/login");
+    },
+    refresh(){
+
     },
     editItem(item) {
       if (item) {

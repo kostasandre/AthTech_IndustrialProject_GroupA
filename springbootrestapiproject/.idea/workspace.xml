@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="44ab83bd-f81f-4140-978d-9daf153fd668" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../industrial_project_client/src/components/AdminPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../industrial_project_client/src/components/AdminPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../industrial_project_client/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../industrial_project_client/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../industrial_project_client/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/../industrial_project_client/src/router.js" afterDir="false" />
-    </list>
+    <list default="true" id="44ab83bd-f81f-4140-978d-9daf153fd668" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +37,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -87,8 +85,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">

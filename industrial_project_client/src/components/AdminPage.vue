@@ -50,6 +50,7 @@
               :search="search"
               class="elevation-1"
             >
+            
             <template v-slot:item.action="{ item }">
             <v-icon
                 small
@@ -59,6 +60,7 @@
             >
                 edit
             </v-icon>
+            
             <!-- <v-icon
                 small
                 color="red"
@@ -69,7 +71,13 @@
         </template>
               <template v-slot:top>
                 <v-toolbar flat color="white">
-
+<v-btn
+                    style="margin-left: 30px;"
+                      color="primary"
+                      dark
+                      class="mb-2"
+                      @click="refresh()"
+                    >Refresh</v-btn>
                   <v-dialog v-model="dialog" max-width="500px">
                     <v-card>
                       <v-card-title>
@@ -271,6 +279,43 @@ this.myRequests.push(request);
       }
 
       this.$router.push("/login");
+    },
+    refresh(){
+      axios.get("http://localhost:8080/company/companies").then(
+        result => {
+          if (result.status === 200) {
+              result.data.forEach(company => {
+                  if(company.getRequests.length > 0){
+                      company.getRequests.forEach(request => {
+                          request.companyName = company.companyName;
+                          request.address = company.address;
+                          request.requestCode = request.id;
+                          request.requestDate = request.requestDate ? new Date(request.requestDate).toLocaleDateString("en-GB") : '';
+        request.requestExpirationDate = request.requestExpirationDate ? new Date(request.requestExpirationDate).toLocaleDateString("en-GB") : '';
+this.myRequests.push(request);
+                      });
+                  
+                  }
+              });
+            // this.myRequests.forEach(element => {
+            // element.company = this.company.companyName;
+            // element.address = this.company.address;
+            // element.requestCode = element.id;
+            // element.requestDate = element.requestDate ? new Date(element.requestDate).toLocaleDateString("en-GB") : '';
+            // element.requestExpireDate = element.requestExpireDate ? new Date(element.requestExpireDate).toLocaleDateString("en-GB") : '';
+            // });
+          } else {
+            this.snackbarColor = "red";
+            this.snackbarMessage = "Error retreiving all requests!";
+            this.snackbar = true;
+          }
+        },
+        error => {
+          this.snackbarColor = "red";
+          this.snackbarMessage = "Error: " + error.message;
+          this.snackbar = true;
+        }
+      );
     },
     editItem(item) {
       if (item) {
