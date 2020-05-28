@@ -9,6 +9,7 @@
       <v-tabs>
         <!-- <v-tab @change="onTabChange">Ads</v-tab> -->
         <v-tab>All Requests</v-tab>
+        <v-tab>History</v-tab>
         <!-- <v-tab-item>
         <v-card>
           <v-card-title>
@@ -69,6 +70,7 @@
                 delete
             </v-icon> -->
         </template>
+        
               <template v-slot:top>
                 <v-toolbar flat color="white">
 <v-btn
@@ -77,6 +79,114 @@
                       dark
                       class="mb-2"
                       @click="refresh()"
+                    >Refresh</v-btn>
+                  <v-dialog v-model="dialog" max-width="500px">
+                    <v-card>
+                      <v-card-title>
+                        <span class="headline">{{ formTitle }}</span>
+                      </v-card-title>
+
+                      <v-card-text>
+                        <v-container>
+                          <v-row>
+                            <v-col cols="12" sm="12" md="12">
+                              <v-text-field disabled v-model="editedItem.companyName" label="Company"></v-text-field>
+                            </v-col>                            
+                          </v-row>
+                          <v-row>
+                            <v-col cols="12" sm="6" md="6">
+                              <v-text-field disabled v-model="editedItem.supervisor" label="Supervisor"></v-text-field>
+                            </v-col>
+                            <!-- <v-col cols="12" sm="6" md="6">
+                              <v-text-field v-model="editedItem.requestDate" label="Request date"></v-text-field>
+                            </v-col> -->
+                          </v-row>
+                          <v-row>
+                            <v-col cols="12" sm="12" md="12">
+                              <v-textarea disabled
+                              v-model="editedItem.description"
+                              name="Description"
+                              label="Description"
+                            ></v-textarea>
+                            </v-col>
+                            
+                          </v-row>
+                          <v-row>
+                            <v-col cols="12" sm="12" md="12">
+                              <v-select
+                              v-model="editedItem.status"
+                                :items="statuses"
+                                label="Status"
+                              ></v-select>
+                            </v-col>
+                            
+                          </v-row>
+                        </v-container>
+                      </v-card-text>
+
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
+                        <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </v-toolbar>
+              </template>
+              <!-- <template v-slot:item.action="{ item }">
+              <v-icon small class="mr-2" @click="editItem(item)">edit</v-icon>
+              <v-icon small @click="deleteItem(item)">delete</v-icon>
+            </template> -->
+            </v-data-table>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card>
+            <v-card-title>
+              <v-spacer></v-spacer>
+              <v-text-field
+                v-model="search"
+                append-icon="search"
+                label="Search"
+                single-line
+                hide-details
+              ></v-text-field>
+            </v-card-title>
+            <v-data-table
+              :headers="headlines"
+              :items="myRequestHistory"
+              :items-per-page="10"
+              :search="search"
+              class="elevation-1"
+            >
+            
+            <template v-slot:item.action="{ item }">
+            <v-icon
+                small
+                class="mr-2"
+                color="blue"
+                @click="editItem(item)"
+            >
+                edit
+            </v-icon>
+            
+            <!-- <v-icon
+                small
+                color="red"
+                @click="deleteItem(item.id)"
+            >
+                delete
+            </v-icon> -->
+        </template>
+        
+              <template v-slot:top>
+                <v-toolbar flat color="white">
+<v-btn
+                    style="margin-left: 30px;"
+                      color="primary"
+                      dark
+                      class="mb-2"
+                      @click="loader()"
                     >Refresh</v-btn>
                   <v-dialog v-model="dialog" max-width="500px">
                     <v-card>
@@ -173,6 +283,9 @@ export default {
         description: "",
         requestDate:"",
         requestExpirationDate:"",
+        changedRequestExpirationDate:"",
+        changedAt:"",
+        changedStatus:"",
         supervisor:"",
         status:""
       },
@@ -193,7 +306,18 @@ export default {
         { text: "Status", value: "status", sortable: true },
         {text: 'Action', value: 'action'},
       ],
+      headlines: [
+        { text: "Change ID Code", value: "changeCode", sortable: true },
+        { text: "Company", value: "companyName" },
+        { text: "Request date", value: "requestDate", sortable: true },
+        { text: "Old Request expire date", value: "requestExpirationDate", sortable: true },
+        { text: "Old Status", value: "status", sortable: true },
+        { text: "New Status", value: "newStatus", sortable: true },
+        { text: "New Expiration Date", value: "newExpirationDate", sortable: true },
+        { text: "Date Changed", value: "dateChanged", sortable: true },
+      ],
       myRequests: [],
+      myRequestHistory: [],
       allAds: []
     };
   },
@@ -208,11 +332,24 @@ export default {
                           request.companyName = company.companyName;
                           request.address = company.address;
                           request.requestCode = request.id;
+
                           request.requestDate = request.requestDate ? new Date(request.requestDate).toLocaleDateString("en-GB") : '';
         request.requestExpirationDate = request.requestExpirationDate ? new Date(request.requestExpirationDate).toLocaleDateString("en-GB") : '';
 this.myRequests.push(request);
                       });
-                  
+                  }
+                  if(company.getRequestsHistory.length > 0){
+                      company.getRequestsHistory.forEach(request => {
+                          request.companyName = company.companyName;
+                          request.address = company.address;
+                          request.changeCode = request.id;
+                          request.newStatus = request.changedStatus;
+                          request.dateChanged = request.changedAt ? new Date(request.changedAt).toLocaleDateString("en-GB") : '';
+request.newExpirationDate = request.changedRequestExpirationDate ? new Date(request.changedRequestExpirationDate).toLocaleDateString("en-GB") : '';                          
+                          request.requestDate = request.requestDate ? new Date(request.requestDate).toLocaleDateString("en-GB") : '';
+        request.requestExpirationDate = request.requestExpirationDate ? new Date(request.requestExpirationDate).toLocaleDateString("en-GB") : '';
+this.myRequestHistory.push(request);
+                      });
                   }
               });
             // this.myRequests.forEach(element => {
@@ -296,6 +433,47 @@ this.myRequests.push(request);
 this.myRequests.push(request);
                       });
                   
+                  }
+              });
+            // this.myRequests.forEach(element => {
+            // element.company = this.company.companyName;
+            // element.address = this.company.address;
+            // element.requestCode = element.id;
+            // element.requestDate = element.requestDate ? new Date(element.requestDate).toLocaleDateString("en-GB") : '';
+            // element.requestExpireDate = element.requestExpireDate ? new Date(element.requestExpireDate).toLocaleDateString("en-GB") : '';
+            // });
+          } else {
+            this.snackbarColor = "red";
+            this.snackbarMessage = "Error retreiving all requests!";
+            this.snackbar = true;
+          }
+        },
+        error => {
+          this.snackbarColor = "red";
+          this.snackbarMessage = "Error: " + error.message;
+          this.snackbar = true;
+        }
+      );
+    },
+
+     loader(){
+      this.myRequestHistory = [];
+      axios.get("http://localhost:8080/company/companies").then(
+        result => {
+          if (result.status === 200) {
+              result.data.forEach(company => {
+                   if(company.getRequestsHistory.length > 0){
+                      company.getRequestsHistory.forEach(request => {
+                          request.companyName = company.companyName;
+                          request.address = company.address;
+                          request.changeCode = request.id;
+                          request.newStatus = request.changedStatus;
+                          request.dateChanged = request.changedAt ? new Date(request.changedAt).toLocaleDateString("en-GB") : '';
+request.newExpirationDate = request.changedRequestExpirationDate ? new Date(request.changedRequestExpirationDate).toLocaleDateString("en-GB") : '';                          
+                          request.requestDate = request.requestDate ? new Date(request.requestDate).toLocaleDateString("en-GB") : '';
+        request.requestExpirationDate = request.requestExpirationDate ? new Date(request.requestExpirationDate).toLocaleDateString("en-GB") : '';
+this.myRequestHistory.push(request);
+                      });
                   }
               });
             // this.myRequests.forEach(element => {

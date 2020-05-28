@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.letsstart.springbootrestapiproject.dao.CompanyDAO;
 import com.letsstart.springbootrestapiproject.dao.RequestDAO;
+import com.letsstart.springbootrestapiproject.dao.RequestHistoryDAO;
 import com.letsstart.springbootrestapiproject.model.Company;
 import com.letsstart.springbootrestapiproject.model.Login;
 import com.letsstart.springbootrestapiproject.model.Request;
+import com.letsstart.springbootrestapiproject.model.RequestHistory;
+
+import enums.Status;
 
 @CrossOrigin(origins = "http://localhost:4078")
 @RestController
@@ -29,6 +33,8 @@ public class CompanyController {
 	CompanyDAO companyDAO;
 	@Autowired
 	RequestDAO requestDAO;
+	@Autowired
+	RequestHistoryDAO requestHistoryDAO;
 	
 	/* to save a company*/
 	@PostMapping("/register")
@@ -69,6 +75,12 @@ public class CompanyController {
 	@GetMapping("/companies")
 	public List<Company> getAllCompanies(){
 		return companyDAO.findAll();
+	}
+	
+	/*get all requests*/
+	@GetMapping("/requesthistory")
+	public List<RequestHistory> getAllRequests(){
+		return requestHistoryDAO.findAll();
 	}
 	
 	

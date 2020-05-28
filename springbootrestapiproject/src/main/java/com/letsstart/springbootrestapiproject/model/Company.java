@@ -52,6 +52,18 @@ public class Company {
 	public void setGetRequests(List<Request> getRequests) {
 		this.getRequests = getRequests;
 	}
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "company_id", referencedColumnName = "id")
+	private List<RequestHistory> getRequestsHistory;
+
+	public List<RequestHistory> getGetRequestsHistory() {
+		return getRequestsHistory;
+	}
+
+	public void setGetRequestsHistory(List<RequestHistory> getRequestsHistory) {
+		this.getRequestsHistory = getRequestsHistory;
+	}
 
 	public String getEmail() {
 		return email;
