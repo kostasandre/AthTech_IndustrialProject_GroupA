@@ -268,7 +268,46 @@ export default {
       this.$router.push("/login");
     },
     refresh(){
-
+      axios.get("http://localhost:8080/company/get-company", {
+              params: {
+                id: this.company.id
+              }
+            })
+            .then(
+              result => {
+                if (result.status === 200) {
+                  this.myRequests = result.data.getRequests;
+      this.myRequests.sort(function(a,b) {
+          a = new Date(a.requestDate);
+      b = new Date(b.requestDate);
+      return a>b ? -1 : a<b ? 1 : 0;
+      });
+      this.myRequests.forEach(element => {
+        /* var date = new Date(element.requestDate); */
+       /*  var expirationDate = new Date(element.requestExpirationDate); */
+        element.company = this.company.companyName;
+        element.address = this.company.address;
+        element.requestCode = element.id;
+        element.requestDate = element.requestDate
+        ? new Date(element.requestDate).toLocaleDateString("en-GB")
+          : "";  
+          /* ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+          : "" ;*/
+        element.requestExpirationDate = element.requestExpirationDate
+         /* ? `${expirationDate.getDate()}/${expirationDate.getMonth() + 1}/${expirationDate.getFullYear()} ${expirationDate.getHours()}:${expirationDate.getMinutes()}:${expirationDate.getSeconds()}`
+          : "";  */
+           ? new Date(element.requestExpirationDate).toLocaleDateString("en-GB")
+          : "";  
+      });
+                  
+                }
+              },
+              error => {
+                this.snackbarColor = "red";
+                this.snackbarMessage = "Error" + error.message;
+                this.snackbar = true;
+              }
+            );
     },
     editItem(item) {
       if (item) {
